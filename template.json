@@ -26,7 +26,7 @@
     "variables": {},
     "resources": [
         {
-            "comments": "Generalized from resource: '/subscriptions/ba959fbb-a271-455c-b72f-b2a8a8ca7c27/resourcegroups/blog-static/providers/Microsoft.Cdn/profiles/coderfrontline-102'.",
+            
             "type": "Microsoft.Cdn/profiles",
             "sku": {
                 "name": "Premium_Verizon"
@@ -43,7 +43,7 @@
             "dependsOn": []
         },
         {
-            "comments": "Generalized from resource: '/subscriptions/ba959fbb-a271-455c-b72f-b2a8a8ca7c27/resourceGroups/blog-static/providers/Microsoft.Storage/storageAccounts/coderfrontline101'.",
+            
             "type": "Microsoft.Storage/storageAccounts",
             "sku": {
                 "name": "Standard_LRS",
@@ -79,7 +79,7 @@
             "dependsOn": []
         },
         {
-            "comments": "Generalized from resource: '/subscriptions/ba959fbb-a271-455c-b72f-b2a8a8ca7c27/resourcegroups/blog-static/providers/Microsoft.Cdn/profiles/coderfrontline-102/endpoints/coderfrontline-102'.",
+            
             "type": "Microsoft.Cdn/profiles/endpoints",
             "name": "[concat(parameters('cdn_profile_name'), '/', parameters('cdn_endpoint_name'))]",
             "apiVersion": "2016-04-02",
@@ -110,7 +110,7 @@
             ]
         },
         {
-            "comments": "Generalized from resource: '/subscriptions/ba959fbb-a271-455c-b72f-b2a8a8ca7c27/resourcegroups/blog-static/providers/Microsoft.Cdn/profiles/coderfrontline-102/endpoints/coderfrontline-102/customdomains/www-coderfrontline-com'.",
+            
             "type": "Microsoft.Cdn/profiles/endpoints/customdomains",
             "name": "[concat(parameters('cdn_profile_name'), '/', parameters('cdn_endpoint_name'), '/', parameters('cdn_endpoint_customDomain'))]",
             "apiVersion": "2016-04-02",
@@ -124,7 +124,7 @@
             ]
         },
         {
-            "comments": "Generalized from resource: '/subscriptions/ba959fbb-a271-455c-b72f-b2a8a8ca7c27/resourcegroups/blog-static/providers/Microsoft.Cdn/profiles/coderfrontline-102/endpoints/coderfrontline-102/origins/coderfrontline101-z8-web-core-windows-net'.",
+            
             "type": "Microsoft.Cdn/profiles/endpoints/origins",
             "name": "[concat(parameters('cdn_profile_name'), '/', parameters('cdn_endpoint_name'), '/', parameters('cdn_endpoint_origin'))]",
             "apiVersion": "2016-04-02",
