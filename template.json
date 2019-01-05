@@ -19,7 +19,7 @@
             "type": "String"
         },
         "cdn_endpoint_origin": {
-            "defaultValue": "coderfrontline101-z8-web-core-windows-net",
+            "defaultValue": "coderfrontline101.z8.web.core.windows.net",
             "type": "String"
         }
     },
@@ -87,16 +87,16 @@
             "tags": {},
             "scale": null,
             "properties": {
-                "originHostHeader": "coderfrontline101.z8.web.core.windows.net",
+                "originHostHeader": "[replace(parameters('cdn_endpoint_origin'), '.', '-')]",
                 "isHttpAllowed": true,
                 "isHttpsAllowed": true,
                 "queryStringCachingBehavior": "NotSet",
                 "originPath": null,
                 "origins": [
                     {
-                        "name": "coderfrontline101-z8-web-core-windows-net",
+                        "name": "[replace(parameters('cdn_endpoint_origin'), '.', '-')]",
                         "properties": {
-                            "hostName": "coderfrontline101.z8.web.core.windows.net",
+                            "hostName": "parameters('cdn_endpoint_origin')",
                             "httpPort": 80,
                             "httpsPort": 443
                         }
@@ -126,7 +126,7 @@
         {
             
             "type": "Microsoft.Cdn/profiles/endpoints/origins",
-            "name": "[concat(parameters('cdn_profile_name'), '/', parameters('cdn_endpoint_name'), '/', parameters('cdn_endpoint_origin'))]",
+            "name": "[concat(parameters('cdn_profile_name'), '/', parameters('cdn_endpoint_name'), '/', [replace(parameters('cdn_endpoint_origin'), '.', '-')])]",
             "apiVersion": "2016-04-02",
             "scale": null,
             "properties": {
