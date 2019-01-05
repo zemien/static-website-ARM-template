@@ -2,26 +2,43 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "storageAccounts_name": {
-            "defaultValue": "coderfrontline101",
-            "type": "String"
+        "storageAccount_name": {
+            "defaultValue": "[concat('static-site-', uniqueString(resourceGroup().id))]",
+            "type": "String",
+            "metadata": {
+                "description": "Name of the storage account endpoint. To use the default value, do not specify your own value."
+            }
         },
         "cdn_profile_name": {
-            "defaultValue": "coderfrontline-102",
-            "type": "String"
+            "defaultValue": "[concat('cdn-profile-', parameters('storageAccount_name')]",
+            "type": "String",
+            "metadata": {
+                "description": "Name of the CDN profile. To use the default value, do not specify your own value."
+            }
         },
         "cdn_endpoint_name": {
-            "defaultValue": "coderfrontline-102",
-            "type": "String"
+            "defaultValue": "[concat('cdn-endpoint-', parameters('storageAccount_name')]",
+            "type": "String",
+            "metadata": {
+                "description": "Name of the CDN endpoint. To use the default value, do not specify your own value."
+            }
         },
         "cdn_endpoint_customDomain": {
-            "defaultValue": "www.coderfrontline.com",
-            "type": "String"
+            "defaultValue": "www.example.com",
+            "type": "String",
+            "metadata": {
+                "description": "The custom domain that will point to the CDN. You must perform DNS CNAME mapping first to <CDN_ENDPOINT_NAME>.azureedge.net because the deployment will fail if Azure cannot verify your CNAME is mapped. See https://docs.microsoft.com/en-us/azure/cdn/cdn-map-content-to-custom-domain"
+            }
+        },
+        "cdn_endpoint_origin": {
+            "defaultValue": "[concat(parameters(storageAccount_name)], 'web.core.windows.net/$web/')]",
+            "type": "String",
+            "metadata": {
+                "description": "The static website endpoint of the storage account. This is currently incomplete and will need to be manually changed after deployment. The actual format of the endpoint should be https://<ACCOUNT_NAME>.<ZONE_NAME>.web.core.windows.net/ but there is currently no way to get the ZONE_NAME in an ARM template (see https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-static-website)"
+            }
         }
     },
-    "variables": {
-        "cdn_endpoint_origin": "[concat(parameters(storageAccounts_name)], 'web.core.windows.net/$web')]"
-    },
+    "variables": {},
     "resources": [
         {
             
@@ -48,7 +65,7 @@
                 "tier": "Standard"
             },
             "kind": "StorageV2",
-            "name": "[parameters('storageAccounts_name')]",
+            "name": "[parameters('storageAccount_name')]",
             "apiVersion": "2018-07-01",
             "location": "[resourceGroup().location]",
             "tags": {},
@@ -85,7 +102,7 @@
             "tags": {},
             "scale": null,
             "properties": {
-                "originHostHeader": "[variables('cdn_endpoint_origin')]",
+                "originHostHeader": "[parameters('cdn_endpoint_origin')]",
                 "isHttpAllowed": true,
                 "isHttpsAllowed": true,
                 "queryStringCachingBehavior": "NotSet",
@@ -94,7 +111,7 @@
                     {
                         "name": "[concat(parameters('cdn_endpoint_name'), '-origin-', uniqueString(resourceGroup().id))]",
                         "properties": {
-                            "hostName": "[variables('cdn_endpoint_origin')]",
+                            "hostName": "[parameters('cdn_endpoint_origin')]",
                             "httpPort": 80,
                             "httpsPort": 443
                         }
