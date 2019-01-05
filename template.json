@@ -17,13 +17,11 @@
         "cdn_endpoint_customDomain": {
             "defaultValue": "www.coderfrontline.com",
             "type": "String"
-        },
-        "cdn_endpoint_origin": {
-            "defaultValue": "coderfrontline101.z8.web.core.windows.net",
-            "type": "String"
         }
     },
-    "variables": {},
+    "variables": {
+        "cdn_endpoint_origin": "[concat(parameters(storageAccounts_name)], 'web.core.windows.net/$web')]"
+    },
     "resources": [
         {
             
@@ -87,16 +85,16 @@
             "tags": {},
             "scale": null,
             "properties": {
-                "originHostHeader": "[replace(parameters('cdn_endpoint_origin'), '.', '-')]",
+                "originHostHeader": "[variables('cdn_endpoint_origin')]",
                 "isHttpAllowed": true,
                 "isHttpsAllowed": true,
                 "queryStringCachingBehavior": "NotSet",
                 "originPath": null,
                 "origins": [
                     {
-                        "name": "[replace(parameters('cdn_endpoint_origin'), '.', '-')]",
+                        "name": "[concat(parameters('cdn_endpoint_name'), '-origin-', uniqueString(resourceGroup().id))]",
                         "properties": {
-                            "hostName": "[parameters('cdn_endpoint_origin')]",
+                            "hostName": "[variables('cdn_endpoint_origin')]",
                             "httpPort": 80,
                             "httpsPort": 443
                         }
@@ -117,22 +115,6 @@
             "scale": null,
             "properties": {
                 "hostName": "[parameters('cdn_endpoint_customDomain')]"
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Cdn/profiles', parameters('cdn_profile_name'))]",
-                "[resourceId('Microsoft.Cdn/profiles/endpoints', parameters('cdn_profile_name'), parameters('cdn_endpoint_name'))]"
-            ]
-        },
-        {
-            
-            "type": "Microsoft.Cdn/profiles/endpoints/origins",
-            "name": "[concat(parameters('cdn_profile_name'), '/', parameters('cdn_endpoint_name'), '/', [replace(parameters('cdn_endpoint_origin'), '.', '-')])]",
-            "apiVersion": "2016-04-02",
-            "scale": null,
-            "properties": {
-                "hostName": "coderfrontline101.z8.web.core.windows.net",
-                "httpPort": 80,
-                "httpsPort": 443
             },
             "dependsOn": [
                 "[resourceId('Microsoft.Cdn/profiles', parameters('cdn_profile_name'))]",

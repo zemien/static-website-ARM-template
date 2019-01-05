@@ -13,9 +13,6 @@
         },
         "cdn_endpoint_customDomain": {
             "value": null
-        },
-        "cdn_endpoint_origin": {
-            "value": null
         }
     }
 }
