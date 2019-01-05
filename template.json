@@ -2,23 +2,23 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "profiles_coderfrontline_102_name": {
-            "defaultValue": "coderfrontline-102",
-            "type": "String"
-        },
-        "storageAccounts_coderfrontline101_name": {
+        "storageAccounts_name": {
             "defaultValue": "coderfrontline101",
             "type": "String"
         },
-        "endpoints_coderfrontline_102_name": {
+        "cdn_profile_name": {
             "defaultValue": "coderfrontline-102",
             "type": "String"
         },
-        "customdomains_www_coderfrontline_com_name": {
+        "cdn_endpoint_name": {
+            "defaultValue": "coderfrontline-102",
+            "type": "String"
+        },
+        "cdn_endpoint_customDomain": {
             "defaultValue": "www-coderfrontline-com",
             "type": "String"
         },
-        "origins_coderfrontline101_z8_web_core_windows_net_name": {
+        "cdn_endpoint_origin": {
             "defaultValue": "coderfrontline101-z8-web-core-windows-net",
             "type": "String"
         }
@@ -31,7 +31,7 @@
             "sku": {
                 "name": "Premium_Verizon"
             },
-            "name": "[parameters('profiles_coderfrontline_102_name')]",
+            "name": "[parameters('cdn_profile_name')]",
             "apiVersion": "2016-04-02",
             "location": "AustraliaEast",
             "tags": {},
@@ -50,7 +50,7 @@
                 "tier": "Standard"
             },
             "kind": "StorageV2",
-            "name": "[parameters('storageAccounts_coderfrontline101_name')]",
+            "name": "[parameters('storageAccounts_name')]",
             "apiVersion": "2018-07-01",
             "location": "australiaeast",
             "tags": {},
@@ -81,7 +81,7 @@
         {
             "comments": "Generalized from resource: '/subscriptions/ba959fbb-a271-455c-b72f-b2a8a8ca7c27/resourcegroups/blog-static/providers/Microsoft.Cdn/profiles/coderfrontline-102/endpoints/coderfrontline-102'.",
             "type": "Microsoft.Cdn/profiles/endpoints",
-            "name": "[concat(parameters('profiles_coderfrontline_102_name'), '/', parameters('endpoints_coderfrontline_102_name'))]",
+            "name": "[concat(parameters('cdn_profile_name'), '/', parameters('cdn_endpoint_name'))]",
             "apiVersion": "2016-04-02",
             "location": "AustraliaEast",
             "tags": {},
@@ -106,27 +106,27 @@
                 "isCompressionEnabled": false
             },
             "dependsOn": [
-                "[resourceId('Microsoft.Cdn/profiles', parameters('profiles_coderfrontline_102_name'))]"
+                "[resourceId('Microsoft.Cdn/profiles', parameters('cdn_profile_name'))]"
             ]
         },
         {
             "comments": "Generalized from resource: '/subscriptions/ba959fbb-a271-455c-b72f-b2a8a8ca7c27/resourcegroups/blog-static/providers/Microsoft.Cdn/profiles/coderfrontline-102/endpoints/coderfrontline-102/customdomains/www-coderfrontline-com'.",
             "type": "Microsoft.Cdn/profiles/endpoints/customdomains",
-            "name": "[concat(parameters('profiles_coderfrontline_102_name'), '/', parameters('endpoints_coderfrontline_102_name'), '/', parameters('customdomains_www_coderfrontline_com_name'))]",
+            "name": "[concat(parameters('cdn_profile_name'), '/', parameters('cdn_endpoint_name'), '/', parameters('cdn_endpoint_customDomain'))]",
             "apiVersion": "2016-04-02",
             "scale": null,
             "properties": {
                 "hostName": "www.coderfrontline.com"
             },
             "dependsOn": [
-                "[resourceId('Microsoft.Cdn/profiles', parameters('profiles_coderfrontline_102_name'))]",
-                "[resourceId('Microsoft.Cdn/profiles/endpoints', parameters('profiles_coderfrontline_102_name'), parameters('endpoints_coderfrontline_102_name'))]"
+                "[resourceId('Microsoft.Cdn/profiles', parameters('cdn_profile_name'))]",
+                "[resourceId('Microsoft.Cdn/profiles/endpoints', parameters('cdn_profile_name'), parameters('cdn_endpoint_name'))]"
             ]
         },
         {
             "comments": "Generalized from resource: '/subscriptions/ba959fbb-a271-455c-b72f-b2a8a8ca7c27/resourcegroups/blog-static/providers/Microsoft.Cdn/profiles/coderfrontline-102/endpoints/coderfrontline-102/origins/coderfrontline101-z8-web-core-windows-net'.",
             "type": "Microsoft.Cdn/profiles/endpoints/origins",
-            "name": "[concat(parameters('profiles_coderfrontline_102_name'), '/', parameters('endpoints_coderfrontline_102_name'), '/', parameters('origins_coderfrontline101_z8_web_core_windows_net_name'))]",
+            "name": "[concat(parameters('cdn_profile_name'), '/', parameters('cdn_endpoint_name'), '/', parameters('cdn_endpoint_origin'))]",
             "apiVersion": "2016-04-02",
             "scale": null,
             "properties": {
@@ -135,8 +135,8 @@
                 "httpsPort": 443
             },
             "dependsOn": [
-                "[resourceId('Microsoft.Cdn/profiles', parameters('profiles_coderfrontline_102_name'))]",
-                "[resourceId('Microsoft.Cdn/profiles/endpoints', parameters('profiles_coderfrontline_102_name'), parameters('endpoints_coderfrontline_102_name'))]"
+                "[resourceId('Microsoft.Cdn/profiles', parameters('cdn_profile_name'))]",
+                "[resourceId('Microsoft.Cdn/profiles/endpoints', parameters('cdn_profile_name'), parameters('cdn_endpoint_name'))]"
             ]
         }
     ]
