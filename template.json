@@ -33,7 +33,7 @@
             },
             "name": "[parameters('cdn_profile_name')]",
             "apiVersion": "2016-04-02",
-            "location": "AustraliaEast",
+            "location": "[resourceGroup().location]",
             "tags": {},
             "scale": null,
             "properties": {
@@ -52,7 +52,7 @@
             "kind": "StorageV2",
             "name": "[parameters('storageAccounts_name')]",
             "apiVersion": "2018-07-01",
-            "location": "australiaeast",
+            "location": "[resourceGroup().location]",
             "tags": {},
             "scale": null,
             "properties": {
@@ -83,7 +83,7 @@
             "type": "Microsoft.Cdn/profiles/endpoints",
             "name": "[concat(parameters('cdn_profile_name'), '/', parameters('cdn_endpoint_name'))]",
             "apiVersion": "2016-04-02",
-            "location": "AustraliaEast",
+            "location": "[resourceGroup().location]",
             "tags": {},
             "scale": null,
             "properties": {
