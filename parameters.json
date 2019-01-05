@@ -1,0 +1,21 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "profiles_coderfrontline_102_name": {
+            "value": null
+        },
+        "storageAccounts_coderfrontline101_name": {
+            "value": null
+        },
+        "endpoints_coderfrontline_102_name": {
+            "value": null
+        },
+        "customdomains_www_coderfrontline_com_name": {
+            "value": null
+        },
+        "origins_coderfrontline101_z8_web_core_windows_net_name": {
+            "value": null
+        }
+    }
+}
