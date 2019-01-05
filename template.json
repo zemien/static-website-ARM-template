@@ -15,7 +15,7 @@
             "type": "String"
         },
         "cdn_endpoint_customDomain": {
-            "defaultValue": "www-coderfrontline-com",
+            "defaultValue": "www.coderfrontline.com",
             "type": "String"
         },
         "cdn_endpoint_origin": {
@@ -96,7 +96,7 @@
                     {
                         "name": "[replace(parameters('cdn_endpoint_origin'), '.', '-')]",
                         "properties": {
-                            "hostName": "parameters('cdn_endpoint_origin')",
+                            "hostName": "[parameters('cdn_endpoint_origin')]",
                             "httpPort": 80,
                             "httpsPort": 443
                         }
@@ -112,11 +112,11 @@
         {
             
             "type": "Microsoft.Cdn/profiles/endpoints/customdomains",
-            "name": "[concat(parameters('cdn_profile_name'), '/', parameters('cdn_endpoint_name'), '/', parameters('cdn_endpoint_customDomain'))]",
+            "name": "[concat(parameters('cdn_profile_name'), '/', parameters('cdn_endpoint_name'), '/', replace(parameters('cdn_endpoint_customDomain'), '.', '-'))]",
             "apiVersion": "2016-04-02",
             "scale": null,
             "properties": {
-                "hostName": "www.coderfrontline.com"
+                "hostName": "[parameters('cdn_endpoint_customDomain')]"
             },
             "dependsOn": [
                 "[resourceId('Microsoft.Cdn/profiles', parameters('cdn_profile_name'))]",
